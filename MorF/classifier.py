@@ -28,7 +28,7 @@ class GenderClassifier:
     def initialize_model(input_shape: int):
         model = keras.Sequential(
             [
-                keras.layers.Input(shape=(1,)),
+                keras.layers.Input(shape=(input_shape,)),
                 keras.layers.Dense(64, activation=keras.activations.relu),
                 keras.layers.Dropout(0.1),
                 keras.layers.Dense(64, activation=keras.activations.relu),
