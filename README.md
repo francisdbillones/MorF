@@ -31,7 +31,8 @@ To get a local copy up and running follow these simple steps.
 ```sh
 python3 run.py data_dir/
 ```
-`data_dir/` is a directory that must contain `male_names.txt`, `female_names.txt`, and `androgynous_names.txt`. These files must contain line separated ***first names*** only. It is okay for any of these files to be empty.
+`data_dir/` is a directory that must contain `male_names.txt`, `female_names.txt`. 
+These files must contain line separated ***first names*** only. It is okay for any of these files to be empty, but at least one of them should contain content.
 
 
 <!-- LICENSE -->
