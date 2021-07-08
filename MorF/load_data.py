@@ -37,9 +37,7 @@ def load_data(directory: str):
 
     for category in range(2):
         no_of_labels = len(names[category])
-        category_labels = keras.utils.to_categorical(
-            np.full((no_of_labels,), category, dtype=int), 2
-        )
+        category_labels = np.full((no_of_labels,), category, dtype=int)
         labels.append(category_labels)
 
     names = np.concatenate(names)
