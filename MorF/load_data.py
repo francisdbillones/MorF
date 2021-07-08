@@ -1,57 +1,23 @@
 import pandas as pd
-import numpy as np
-import tensorflow.keras as keras
 
-import os
 import string
 
 ALLOWED_CHARS = set(string.ascii_lowercase)
 
 
-def load_data(directory: str):
+def load_data(path_to_data: str):
     """
-    Male names will be labelled 0,
-    female names will be labelled 1,
-    and androgynous names will be labelled 2.
-
-    Returns a two-element tuple consisting of
-    the features, which is a list of strings,
-    and the labels, which is a list of integers.
+    Return a DataFrame in which all the rows are valid.
     """
-    filenames = ["male_names.txt", "female_names.txt"]
+    df = pd.read_csv(path_to_data)
 
-    names = []
+    # filter names that are allowed
+    df = df.loc[df["name"].apply(allowed_name)]
 
-    for filename in filenames:
-        with open(os.path.join(directory, filename)) as reader:
-            allowed_names = []
+    # filter where the gender value is either 0 or 1
+    df = df.loc[df["gender"].isin({0, 1})]
 
-            for line in reader.readlines():
-                name = line.strip().lower()
-                if allowed_name(name):
-                    allowed_names.append(name)
-
-            names.append(np.array(allowed_names))
-
-    labels = []
-
-    for category in range(2):
-        no_of_labels = len(names[category])
-        category_labels = np.full((no_of_labels,), category, dtype=int)
-        labels.append(category_labels)
-
-    names = np.concatenate(names)
-    labels = np.concatenate(labels)
-
-    return construct_dataframe(names, labels)
-
-
-def construct_dataframe(names, labels):
-    column_names = ["names", "labels"]
-
-    data = [*zip(names, labels)]
-
-    return pd.DataFrame(data=data, columns=column_names)
+    return df
 
 
 def allowed_name(name):

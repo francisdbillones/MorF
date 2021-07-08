@@ -12,7 +12,7 @@ EPOCHS = 10
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 run.py directory")
+        print("Usage: python3 run.py file.csv")
         sys.exit(1)
 
     directory = sys.argv[1]
@@ -20,13 +20,13 @@ def main():
     df = load_data(directory)
 
     x_train, x_test, y_train, y_test = train_test_split(
-        np.stack(df["names"].to_numpy()),
-        np.stack(df["labels"].to_numpy()),
+        np.stack(df["name"].to_numpy()),
+        np.stack(df["gender"].to_numpy()),
         test_size=TEST_SIZE,
     )
 
     classifier = GenderClassifier(
-        x_train, y_train, input_shape=max(map(len, df["names"].values))
+        x_train, y_train, input_shape=max(map(len, df["name"].values))
     )
 
     classifier.train(epochs=EPOCHS)

@@ -23,7 +23,7 @@ class WordVectorizer:
         if shape is NONE:
             shape = len(word)
 
-        vector = np.array([ord(c) for c in word])
+        vector = np.array([ord(c) - ord("a") + 1 for c in word.lower()])
 
         if len(word) < shape:
             vector = WordVectorizer.prepend_zeroes(vector, shape)

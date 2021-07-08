@@ -53,11 +53,9 @@ class GenderClassifier:
         self.model.evaluate(x, y)
 
     def predict(self, name):
-        name = WordVectorizer.vectorize(name, self.vector_size)
-        distribution = self.model.predict(np.array([name]))
-        return max(
-            np.ndenumerate(distribution), key=lambda enumeration: enumeration[1]
-        )[0][1]
+        name_vector = WordVectorizer.vectorize(name, self.vector_size)
+        prediction = self.model.predict(np.array([name_vector]))
+        return round(prediction)
 
     def predict_all(self, names):
         return [self.predict(name) for name in names]
