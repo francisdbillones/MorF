@@ -23,7 +23,6 @@ class WordVectorizer:
 
     @staticmethod
     def vectorize_word(word, shape=NONE) -> np.array:
-        return np.array([hash(word)])
         if shape is NONE:
             shape = len(word)
 
