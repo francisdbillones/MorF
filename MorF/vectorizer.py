@@ -5,7 +5,7 @@ NONE = object()
 
 class WordVectorizer:
     @staticmethod
-    def vectorize(words, shape: int = NONE) -> np.ndarray:
+    def vectorize_all(words, shape: int = NONE) -> np.ndarray:
 
         if shape is NONE:
             shape = max(map(len, words))
@@ -13,13 +13,13 @@ class WordVectorizer:
         vectors = []
 
         for word in words:
-            vector = WordVectorizer.vectorize_word(word, shape=shape)
+            vector = WordVectorizer.vectorize(word, shape=shape)
             vectors.append(vector)
 
         return np.array(vectors)
 
     @staticmethod
-    def vectorize_word(word, shape=NONE) -> np.array:
+    def vectorize(word, shape=NONE) -> np.array:
         if shape is NONE:
             shape = len(word)
 

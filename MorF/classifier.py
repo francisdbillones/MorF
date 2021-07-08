@@ -17,7 +17,7 @@ class GenderClassifier:
         self.vector_size = input_shape
         if input_shape is NONE:
             self.vector_size = max(map(len, x))
-        x = WordVectorizer.vectorize(x, self.vector_size)
+        x = WordVectorizer.vectorize_all(x, self.vector_size)
 
         self.x = x
         self.y = y
@@ -49,11 +49,11 @@ class GenderClassifier:
         self.model.fit(self.x, self.y, epochs=epochs)
 
     def evaluate(self, x: np.array, y: np.array):
-        x = WordVectorizer.vectorize(x, self.vector_size)
+        x = WordVectorizer.vectorize_all(x, self.vector_size)
         self.model.evaluate(x, y)
 
     def predict(self, name):
-        name = WordVectorizer.vectorize_word(name, self.vector_size)
+        name = WordVectorizer.vectorize(name, self.vector_size)
         distribution = self.model.predict(np.array([name]))
         return max(
             np.ndenumerate(distribution), key=lambda enumeration: enumeration[1]
