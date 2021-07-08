@@ -33,14 +33,14 @@ class GenderClassifier:
                 keras.layers.Dropout(0.1),
                 keras.layers.Dense(64, activation=keras.activations.relu),
                 keras.layers.Dropout(0.1),
-                keras.layers.Dense(3, activation=keras.activations.softmax),
+                keras.layers.Dense(2, activation=keras.activations.softmax),
             ]
         )
 
         model.compile(
             optimizer=keras.optimizers.Adam(),
-            loss=keras.losses.CategoricalCrossentropy(),
-            metrics=[keras.metrics.categorical_accuracy],
+            loss=keras.losses.BinaryCrossentropy(),
+            metrics=[keras.metrics.binary_accuracy],
         )
 
         return model

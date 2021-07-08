@@ -18,7 +18,7 @@ def load_data(directory: str):
     the features, which is a list of strings,
     and the labels, which is a list of integers.
     """
-    filenames = ["male_names.txt", "female_names.txt", "androgynous_names.txt"]
+    filenames = ["male_names.txt", "female_names.txt"]
 
     names = []
 
@@ -35,10 +35,10 @@ def load_data(directory: str):
 
     labels = []
 
-    for category in range(3):
+    for category in range(2):
         no_of_labels = len(names[category])
         category_labels = keras.utils.to_categorical(
-            np.full((no_of_labels,), category, dtype=int), 3
+            np.full((no_of_labels,), category, dtype=int), 2
         )
         labels.append(category_labels)
 

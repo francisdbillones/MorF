@@ -47,7 +47,7 @@ def main():
 
 
 def start_interactive_mode(classifier: GenderClassifier):
-    categories = ["Male", "Female", "Androgynous"]
+    categories = ["Male", "Female"]
     while s := input():
         if len(s) > classifier.vector_size:
             print(
