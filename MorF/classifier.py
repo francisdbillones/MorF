@@ -13,8 +13,10 @@ class GenderClassifier:
     This exists because I feel it's going to be useful in the future.
     """
 
-    def __init__(self, x: np.ndarray, y: np.ndarray):
-        self.vector_size = max(map(len, x))
+    def __init__(self, x: np.ndarray, y: np.ndarray, input_shape: int = NONE):
+        self.vector_size = input_shape
+        if input_shape is NONE:
+            self.vector_size = max(map(len, x))
         x = WordVectorizer.vectorize(x, self.vector_size)
 
         self.x = x

@@ -3,6 +3,9 @@ import numpy as np
 import tensorflow.keras as keras
 
 import os
+import string
+
+ALLOWED_CHARS = set(string.ascii_lowercase)
 
 
 def load_data(directory: str):
@@ -15,31 +18,32 @@ def load_data(directory: str):
     the features, which is a list of strings,
     and the labels, which is a list of integers.
     """
-    with open(os.path.join(directory, "male_names.txt")) as reader:
-        male_names = np.array([name.strip().lower() for name in reader.readlines()])
+    filenames = ["male_names.txt", "female_names.txt", "androgynous_names.txt"]
 
-    with open(os.path.join(directory, "female_names.txt")) as reader:
-        female_names = np.array([name.strip().lower() for name in reader.readlines()])
+    names = []
 
-    with open(os.path.join(directory, "androgynous_names.txt")) as reader:
-        andro_names = np.array([name.strip().lower() for name in reader.readlines()])
+    for filename in filenames:
+        with open(os.path.join(directory, filename)) as reader:
+            allowed_names = []
 
-    names = np.concatenate([male_names, female_names, andro_names])
+            for line in reader.readlines():
+                name = line.strip().lower()
+                if allowed_name(name):
+                    allowed_names.append(name)
 
-    # male-like names are categorized as 0
-    male_labels = np.zeros((len(male_names),), dtype=int)
+            names.append(np.array(allowed_names))
 
-    # female-like names are categorized as 1
-    female_labels = np.ones((len(female_names),), dtype=int)
+    labels = []
 
-    # androgynous names are categorized as 2
-    andro_labels = np.full((len(andro_names),), 2, dtype=int)
+    for category in range(3):
+        no_of_labels = len(names[category])
+        category_labels = keras.utils.to_categorical(
+            np.full((no_of_labels,), category, dtype=int), 3
+        )
+        labels.append(category_labels)
 
-    male_labels = keras.utils.to_categorical(male_labels, 3)
-    female_labels = keras.utils.to_categorical(female_labels, 3)
-    andro_labels = keras.utils.to_categorical(andro_labels, 3)
-
-    labels = np.concatenate([male_labels, female_labels, andro_labels])
+    names = np.concatenate(names)
+    labels = np.concatenate(labels)
 
     return construct_dataframe(names, labels)
 
@@ -50,3 +54,7 @@ def construct_dataframe(names, labels):
     data = [*zip(names, labels)]
 
     return pd.DataFrame(data=data, columns=column_names)
+
+
+def allowed_name(name):
+    return all(c.lower() in ALLOWED_CHARS for c in name)

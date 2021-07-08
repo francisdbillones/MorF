@@ -20,12 +20,14 @@ def main():
     df = load_data(directory)
 
     x_train, x_test, y_train, y_test = train_test_split(
-        df["names"].to_numpy(),
+        np.stack(df["names"].to_numpy()),
         np.stack(df["labels"].to_numpy()),
         test_size=TEST_SIZE,
     )
 
-    classifier = GenderClassifier(x_train, y_train)
+    classifier = GenderClassifier(
+        x_train, y_train, input_shape=max(map(len, df["names"].values))
+    )
 
     classifier.train(epochs=EPOCHS)
 

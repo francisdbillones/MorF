@@ -1,9 +1,6 @@
 import numpy as np
-import string
 
 NONE = object()
-
-ALLOWED_CHARS = set(string.ascii_lowercase)
 
 
 class WordVectorizer:
@@ -32,13 +29,6 @@ class WordVectorizer:
             vector = WordVectorizer.prepend_zeroes(vector, shape)
 
         return vector
-
-    @staticmethod
-    def is_vectorizable(word: str):
-        # for now, only accept words that consist of only characters part of the English alphabet.
-
-        # check that the word is not empty as well
-        return word and all(c in ALLOWED_CHARS for c in word.lower())
 
     @staticmethod
     def prepend_zeroes(vector: np.ndarray, length: int) -> np.ndarray:
