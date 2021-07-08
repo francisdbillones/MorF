@@ -16,13 +16,15 @@ def load_data(directory: str):
     and the labels, which is a list of integers.
     """
     with open(os.path.join(directory, "male_names.txt")) as reader:
-        male_names = [name.strip().lower() for name in reader.readlines()]
+        male_names = np.array([name.strip().lower() for name in reader.readlines()])
 
     with open(os.path.join(directory, "female_names.txt")) as reader:
-        female_names = [name.strip().lower() for name in reader.readlines()]
+        female_names = np.array([name.strip().lower() for name in reader.readlines()])
 
     with open(os.path.join(directory, "androgynous_names.txt")) as reader:
-        andro_names = [name.strip().lower() for name in reader.readlines()]
+        andro_names = np.array([name.strip().lower() for name in reader.readlines()])
+
+    names = np.concatenate([male_names, female_names, andro_names])
 
     # male-like names are categorized as 0
     male_labels = np.zeros((len(male_names),), dtype=int)
@@ -37,7 +39,14 @@ def load_data(directory: str):
     female_labels = keras.utils.to_categorical(female_labels, 3)
     andro_labels = keras.utils.to_categorical(andro_labels, 3)
 
-    return (
-        np.concatenate([male_names, female_names, andro_names]),
-        np.concatenate([male_labels, female_labels, andro_labels]),
-    )
+    labels = np.concatenate([male_labels, female_labels, andro_labels])
+
+    return construct_dataframe(names, labels)
+
+
+def construct_dataframe(names, labels):
+    column_names = ["names", "labels"]
+
+    data = [*zip(names, labels)]
+
+    return pd.DataFrame(data=data, columns=column_names)

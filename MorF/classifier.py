@@ -1,8 +1,6 @@
 import tensorflow.keras as keras
 import numpy as np
 
-from typing import List
-
 from vectorizer import WordVectorizer
 
 
@@ -15,7 +13,7 @@ class GenderClassifier:
     This exists because I feel it's going to be useful in the future.
     """
 
-    def __init__(self, x: List[str], y: List[int]):
+    def __init__(self, x: np.ndarray, y: np.ndarray):
         self.vector_size = max(map(len, x))
         x = WordVectorizer.vectorize(x, self.vector_size)
 
@@ -28,7 +26,7 @@ class GenderClassifier:
     def initialize_model(input_shape: int):
         model = keras.Sequential(
             [
-                keras.layers.Input(shape=(input_shape,)),
+                keras.layers.InputLayer(input_shape=(input_shape,)),
                 keras.layers.Dense(64, activation=keras.activations.relu),
                 keras.layers.Dropout(0.1),
                 keras.layers.Dense(64, activation=keras.activations.relu),
@@ -54,7 +52,10 @@ class GenderClassifier:
 
     def predict(self, name):
         name = WordVectorizer.vectorize_word(name, self.vector_size)
-        return self.model.predict([name])
+        distribution = self.model.predict(np.array([name]))
+        return max(
+            np.ndenumerate(distribution), key=lambda enumeration: enumeration[1]
+        )[0][1]
 
     def predict_all(self, names):
         return self.model.predict(names)
