@@ -1,18 +1,23 @@
 import tensorflow.keras as keras
 import numpy as np
 
+from typing import List
+
+from vectorizer import WordVectorizer
+
+
 NONE = object()
 
 
 class GenderClassifier:
     """
-    Just a tiny abstraction layer over the Keras API.
+    Just a tiny abstraction layer.
     This exists because I feel it's going to be useful in the future.
     """
 
-    def __init__(self, x, y):
+    def __init__(self, x: List[str], y: List[int]):
         self.vector_size = max(map(len, x))
-        x = self.vectorize(x, self.vector_size)
+        x = WordVectorizer.vectorize(x, self.vector_size)
 
         self.x = x
         self.y = y
@@ -23,7 +28,7 @@ class GenderClassifier:
     def initialize_model(input_shape: int):
         model = keras.Sequential(
             [
-                keras.layers.Input(shape=(input_shape,)),
+                keras.layers.Input(shape=(1,)),
                 keras.layers.Dense(64, activation=keras.activations.relu),
                 keras.layers.Dropout(0.1),
                 keras.layers.Dense(64, activation=keras.activations.relu),
@@ -44,7 +49,7 @@ class GenderClassifier:
         self.model.fit(self.x, self.y, epochs=epochs)
 
     def evaluate(self, x: np.array, y: np.array):
-        x = self.vectorize(x, self.vector_size)
+        x = WordVectorizer.vectorize(x, self.vector_size)
         self.model.evaluate(x, y)
 
     def predict(self, name):
@@ -53,42 +58,3 @@ class GenderClassifier:
 
     def predict_all(self, names):
         return self.model.predict(names)
-
-    @staticmethod
-    def vectorize(x, vector_size):
-        return WordVectorizer.vectorize(x, shape=vector_size)
-
-
-class WordVectorizer:
-    @staticmethod
-    def vectorize(words, shape: int = NONE) -> np.ndarray:
-
-        if shape is NONE:
-            shape = max(map(len, words))
-
-        vectors = []
-
-        for word in words:
-            vector = WordVectorizer.vectorize_word(word, shape=shape)
-            vectors.append(vector)
-
-        return np.array(vectors)
-
-    @staticmethod
-    def vectorize_word(word, shape=NONE) -> np.array:
-        if shape is NONE:
-            shape = len(word)
-
-        vector = np.array([ord(c) for c in word])
-
-        if len(word) < shape:
-            vector = WordVectorizer.prepend_zeroes(vector, shape)
-
-        return vector
-
-    @staticmethod
-    def prepend_zeroes(vector: np.ndarray, length: int) -> np.ndarray:
-        """
-        Prepends length - len(vector) zeros to the vector
-        """
-        return np.concatenate([np.zeros(length - len(vector)), vector])
