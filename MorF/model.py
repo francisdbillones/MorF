@@ -54,7 +54,8 @@ class GenderClassifier:
     def predict_all(self, names):
         return self.model.predict(names)
 
-    def vectorize(self, x, vector_size):
+    @staticmethod
+    def vectorize(x, vector_size):
         return WordVectorizer.vectorize(x, shape=vector_size)
 
 
