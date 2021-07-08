@@ -4,9 +4,8 @@ This is project for my own learning, meaning as I learn more about machine learn
 
 <!-- Status indicators -->
 ## Status
-Last recorded model accuracy: 74.5% ~~70.5%~~ (49% better than randomly guessing)
+Last recorded model accuracy: 77.5% ~~74.5~~ ~~70.5~~ (55% better than randomly guessing)
 <br>
-Code status: refactoring
 
 
 <!-- GETTING STARTED -->
@@ -29,13 +28,13 @@ To get a local copy up and running follow these simple steps.
 ## Usage
 
 ```sh
-python3 run.py data_dir/
+python3 run.py data.csv
 ```
-`data_dir/` is a directory that must contain `male_names.txt`, `female_names.txt`. 
-These files must contain line separated ***first names*** only. It is okay for any of these files to be empty, but at least one of them should contain content.
+`data.csv` is a CSV file with headers `name` and `gender`. An `F` corresponds to female, and an
+`M` corresponds to male. These must be ***first names*** only, and contain at least one name-gender entry.
 
 
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.md` for more information.
+Distributed under the MIT License. See `LICENSE` for more information.
