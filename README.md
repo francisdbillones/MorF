@@ -5,6 +5,7 @@ This is project for my own learning, meaning as I learn more about machine learn
 <!-- Status indicators -->
 ## Status
 Last recorded model accuracy: 74.5% ~~70.5%~~ (49% better than randomly guessing)
+<br>
 Code status: refactoring
 
 
