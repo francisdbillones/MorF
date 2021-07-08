@@ -29,10 +29,10 @@ class GenderClassifier:
         model = keras.Sequential(
             [
                 keras.layers.InputLayer(input_shape=(input_shape,)),
-                keras.layers.Dense(64, activation=keras.activations.relu),
-                keras.layers.Dropout(0.1),
-                keras.layers.Dense(64, activation=keras.activations.relu),
-                keras.layers.Dropout(0.1),
+                keras.layers.Dense(128, activation=keras.activations.relu),
+                keras.layers.Dropout(0.5),
+                keras.layers.Dense(128, activation=keras.activations.relu),
+                keras.layers.Dropout(0.5),
                 keras.layers.Dense(1, activation=keras.activations.sigmoid),
             ]
         )
