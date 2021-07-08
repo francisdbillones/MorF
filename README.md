@@ -4,7 +4,7 @@ This is project for my own learning, meaning as I learn more about machine learn
 
 <!-- Status indicators -->
 ## Status
-Last recorded model accuracy: 70.5% (20.5% better than randomly guessing)
+Last recorded model accuracy: 74.5% ~~70.5%~~ (49% better than randomly guessing)
 Code status: refactoring
 
 
@@ -17,7 +17,7 @@ To get a local copy up and running follow these simple steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/francisdbillones/MorF.git
    ```
 2. Install Python packages
    ```sh
