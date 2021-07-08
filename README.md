@@ -2,6 +2,12 @@
 Gender classifier built with the Tensorflow and Keras API, and trained with 20,000 names + genders from [BehindTheName](https://www.behindthename.com/).
 This is project for my own learning, meaning as I learn more about machine learning, I will (ideally) update the classifier and improve its' accuracy.
 
+<!-- Status indicators -->
+## Status
+Last recorded model accuracy: 70.5% (20.5% better than randomly guessing)
+Code status: refactoring
+
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
