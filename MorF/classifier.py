@@ -60,4 +60,4 @@ class GenderClassifier:
         )[0][1]
 
     def predict_all(self, names):
-        return self.model.predict(names)
+        return [self.predict(name) for name in names]
