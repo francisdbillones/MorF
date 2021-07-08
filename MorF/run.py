@@ -33,6 +33,10 @@ def main():
 
     classifier.evaluate(x_test, np.stack(y_test))
 
+    print(
+        f"Disclaimer: given training data, the model can only handle names up to length {classifier.vector_size}"
+    )
+
     if len(sys.argv) == 3:
         output_filename = sys.argv[2]
 
@@ -45,6 +49,11 @@ def main():
 def start_interactive_mode(classifier: GenderClassifier):
     categories = ["Male", "Female", "Androgynous"]
     while s := input():
+        if len(s) > classifier.vector_size:
+            print(
+                f"Name too long. Keep it less than or equal to {classifier.vector_size}"
+            )
+            continue
         prediction = classifier.predict(s)
         print(categories[prediction])
 
