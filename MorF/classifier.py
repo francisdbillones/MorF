@@ -54,7 +54,7 @@ class GenderClassifier:
 
     def predict(self, name):
         name_vector = WordVectorizer.vectorize(name, self.vector_size)
-        prediction = self.model.predict(np.array([name_vector]))
+        prediction = self.model.predict(np.array([name_vector]))[0][0]
         return round(prediction)
 
     def predict_all(self, names):
