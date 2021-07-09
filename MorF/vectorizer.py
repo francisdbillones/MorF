@@ -1,6 +1,7 @@
 import numpy as np
 
 NONE = object()
+UNDEFINED = -1
 
 
 class WordVectorizer:
@@ -26,13 +27,13 @@ class WordVectorizer:
         vector = np.array([ord(c) - ord("a") for c in word.lower()])
 
         if len(word) < shape:
-            vector = WordVectorizer.prepend_zeroes(vector, shape)
+            vector = WordVectorizer.prepend_undefined(vector, shape)
 
         return vector
 
     @staticmethod
-    def prepend_zeroes(vector: np.ndarray, length: int) -> np.ndarray:
+    def prepend_undefined(vector: np.ndarray, length: int) -> np.ndarray:
         """
         Prepends length - len(vector) zeros to the vector
         """
-        return np.concatenate([np.full((length - len(vector),), -1), vector])
+        return np.concatenate([np.full((length - len(vector),), UNDEFINED), vector])
