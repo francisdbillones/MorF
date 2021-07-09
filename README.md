@@ -1,5 +1,5 @@
 # MorF
-Gender classifier built with the Tensorflow and Keras API, and trained with 20,000 names + genders from [BehindTheName](https://www.behindthename.com/).
+Gender classifier built with the Tensorflow and Keras API, and trained with 95,000 names + genders from [Data World](https://data.world/howarder/gender-by-name).
 This is project for my own learning, meaning as I learn more about machine learning, I will (ideally) update the classifier and improve its' accuracy.
 
 <!-- Status indicators -->
