@@ -33,6 +33,8 @@ class GenderClassifier:
                 keras.layers.Dropout(0.5),
                 keras.layers.Dense(128, activation=keras.activations.relu),
                 keras.layers.Dropout(0.5),
+                keras.layers.Dense(128, activation=keras.activations.relu),
+                keras.layers.Dropout(0.5),
                 keras.layers.Dense(1, activation=keras.activations.sigmoid),
             ]
         )
