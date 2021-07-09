@@ -1,7 +1,11 @@
 import sys
 
-from sklearn.model_selection import train_test_split
+import tensorflow.keras as keras
+import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.model_selection import train_test_split
+
 
 from classifier import GenderClassifier
 from load_data import load_data
@@ -29,9 +33,11 @@ def main():
         x_train, y_train, input_shape=max(map(len, df["name"].values))
     )
 
-    classifier.train(epochs=EPOCHS)
+    history: keras.callbacks.History = classifier.train(epochs=EPOCHS)
 
     classifier.evaluate(x_test, np.stack(y_test))
+
+    plot(history)
 
     print(
         f"Disclaimer: given training data, the model can only handle names up to length {classifier.vector_size}"
@@ -56,6 +62,11 @@ def start_interactive_mode(classifier: GenderClassifier):
             continue
         prediction = classifier.predict(s)
         print(categories[prediction])
+
+
+def plot(history: keras.callbacks.History):
+    pd.DataFrame(history.history).plot()
+    plt.show()
 
 
 if __name__ == "__main__":

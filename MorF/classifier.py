@@ -48,7 +48,7 @@ class GenderClassifier:
         return model
 
     def train(self, epochs=50):
-        self.model.fit(self.x, self.y, epochs=epochs)
+        return self.model.fit(self.x, self.y, epochs=epochs)
 
     def evaluate(self, x: np.array, y: np.array):
         x = WordVectorizer.vectorize_all(x, self.vector_size)
