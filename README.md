@@ -4,7 +4,7 @@ This is project for my own learning, meaning as I learn more about machine learn
 
 <!-- Status indicators -->
 ## Status
-Last recorded model accuracy: 77.5% ~~74.5~~ ~~70.5~~ (55% better than randomly guessing)
+Last recorded model accuracy: 79% ~~77.5%~~ ~~74.5~~ ~~70.5~~ (58% better than randomly guessing)
 <br>
 
 
