@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from classifier import GenderClassifier
 from load_data import load_data
 
-TEST_SIZE = 1 / 5
+TEST_SIZE = 1 / 3
 EPOCHS = 10
 
 
