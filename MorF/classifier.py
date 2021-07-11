@@ -29,11 +29,17 @@ class GenderClassifier:
         model = keras.Sequential(
             [
                 keras.layers.InputLayer(input_shape=(input_shape,)),
-                keras.layers.Dense(128, activation=keras.activations.relu),
+                keras.layers.Dense(
+                    units=128,
+                    activation=keras.activations.relu,
+                    kernel_regularizer=keras.regularizers.l2(l=0.01),
+                ),
                 keras.layers.Dropout(0.5),
-                keras.layers.Dense(128, activation=keras.activations.relu),
-                keras.layers.Dropout(0.5),
-                keras.layers.Dense(128, activation=keras.activations.relu),
+                keras.layers.Dense(
+                    units=128,
+                    activation=keras.activations.relu,
+                    kernel_regularizer=keras.regularizers.l2(l=0.01),
+                ),
                 keras.layers.Dropout(0.5),
                 keras.layers.Dense(1, activation=keras.activations.sigmoid),
             ]
@@ -42,7 +48,12 @@ class GenderClassifier:
         model.compile(
             optimizer=keras.optimizers.Adam(),
             loss=keras.losses.BinaryCrossentropy(),
-            metrics=[keras.metrics.binary_accuracy],
+            metrics=[
+                keras.metrics.BinaryAccuracy(),
+                keras.metrics.Precision(),
+                keras.metrics.Recall(),
+                keras.metrics.AUC(),
+            ],
         )
 
         return model
