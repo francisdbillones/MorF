@@ -11,7 +11,7 @@ from classifier import GenderClassifier
 from load_data import load_data
 
 TEST_SIZE = 1 / 3
-EPOCHS = 10
+EPOCHS = 50
 
 
 def main():
@@ -32,6 +32,8 @@ def main():
     classifier = GenderClassifier(
         x_train, y_train, input_shape=max(map(len, df["name"].values))
     )
+
+    print(classifier.model.summary())
 
     history: keras.callbacks.History = classifier.train(epochs=EPOCHS)
 

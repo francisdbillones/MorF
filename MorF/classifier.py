@@ -15,6 +15,8 @@ class GenderClassifier:
 
     def __init__(self, x: np.ndarray, y: np.ndarray, input_shape: int = NONE):
         self.vector_size = input_shape
+        self.vocab = set(c.lower() for word in x for c in word)
+
         if input_shape is NONE:
             self.vector_size = max(map(len, x))
         x = WordVectorizer.vectorize_all(x, self.vector_size)
@@ -22,30 +24,29 @@ class GenderClassifier:
         self.x = x
         self.y = y
 
-        self.model = GenderClassifier.initialize_model(self.vector_size)
+        self.model = self.initialize_model()
 
-    @staticmethod
-    def initialize_model(input_shape: int):
+    def initialize_model(self):
         model = keras.Sequential(
             [
-                keras.layers.InputLayer(input_shape=(input_shape,)),
-                keras.layers.Dense(
-                    units=128,
-                    activation=keras.activations.relu,
-                    kernel_regularizer=keras.regularizers.l2(l=0.01),
+                keras.layers.Bidirectional(
+                    keras.layers.LSTM(units=256, return_sequences=True),
+                    backward_layer=keras.layers.LSTM(
+                        512, return_sequences=True, go_backwards=True
+                    ),
+                    input_shape=(self.vector_size, len(self.vocab) + 1),
                 ),
                 keras.layers.Dropout(0.5),
-                keras.layers.Dense(
-                    units=128,
-                    activation=keras.activations.relu,
-                    kernel_regularizer=keras.regularizers.l2(l=0.01),
-                ),
+                keras.layers.Bidirectional(keras.layers.LSTM(units=256)),
                 keras.layers.Dropout(0.5),
-                keras.layers.Dense(1, activation=keras.activations.sigmoid),
+                keras.layers.Dense(units=1, activation=keras.activations.sigmoid),
             ]
         )
 
         model.compile(
+            backward_layer=keras.layers.LSTM(
+                512, return_sequences=True, go_backwards=True
+            ),
             optimizer=keras.optimizers.Adam(),
             loss=keras.losses.BinaryCrossentropy(),
             metrics=[
