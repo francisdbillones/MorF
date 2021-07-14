@@ -1,5 +1,11 @@
+.envrc
+
 # jetbrains
 .idea/
+
+# tensorboard
+logs/
+checkpoints/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
