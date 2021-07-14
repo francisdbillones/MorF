@@ -13,6 +13,8 @@ class GenderClassifier:
     This exists because I feel it's going to be useful in the future.
     """
 
+    VALIDATION_SPLIT = 0.2
+
     def __init__(self, x: np.ndarray, y: np.ndarray, input_shape: int = NONE):
         self.vector_size = input_shape
         self.vocab = set(c.lower() for word in x for c in word)
@@ -32,7 +34,7 @@ class GenderClassifier:
                 keras.layers.Bidirectional(
                     keras.layers.LSTM(units=256, return_sequences=True),
                     backward_layer=keras.layers.LSTM(
-                        512, return_sequences=True, go_backwards=True
+                        units=512, return_sequences=True, go_backwards=True
                     ),
                     input_shape=(self.vector_size, len(self.vocab) + 1),
                 ),
@@ -44,9 +46,6 @@ class GenderClassifier:
         )
 
         model.compile(
-            backward_layer=keras.layers.LSTM(
-                512, return_sequences=True, go_backwards=True
-            ),
             optimizer=keras.optimizers.Adam(),
             loss=keras.losses.BinaryCrossentropy(),
             metrics=[
@@ -60,7 +59,20 @@ class GenderClassifier:
         return model
 
     def train(self, epochs=50):
-        return self.model.fit(self.x, self.y, epochs=epochs)
+        callbacks = [
+            keras.callbacks.EarlyStopping(patience=3),
+            keras.callbacks.ModelCheckpoint("checkpoints/checkpoint_model.h5"),
+            keras.callbacks.TensorBoard(
+                log_dir="logs",
+            ),
+        ]
+        return self.model.fit(
+            self.x,
+            self.y,
+            validation_split=self.VALIDATION_SPLIT,
+            epochs=epochs,
+            callbacks=callbacks,
+        )
 
     def evaluate(self, x: np.array, y: np.array):
         x = WordVectorizer.vectorize_all(x, self.vector_size)

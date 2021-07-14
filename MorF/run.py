@@ -11,7 +11,7 @@ from classifier import GenderClassifier
 from load_data import load_data
 
 TEST_SIZE = 1 / 3
-EPOCHS = 50
+EPOCHS = 1
 
 
 def main():
