@@ -30,8 +30,8 @@ To get a local copy up and running follow these simple steps.
 ```sh
 python3 run.py data.csv
 ```
-`data.csv` is a CSV file with headers `name` and `gender`. An `F` corresponds to female, and an
-`M` corresponds to male. These must be ***first names*** only, and contain at least one name-gender entry.
+`data.csv` is a CSV file with headers `name` and `gender`. A 1 corresponds to female, and a
+0 corresponds to male. These must be ***first names*** only, and contain at least one name-gender entry.
 
 
 <!-- LICENSE -->
