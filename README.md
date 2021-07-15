@@ -24,14 +24,23 @@ To get a local copy up and running follow these simple steps.
    python3 -m pip install -r requirements.txt
    ```
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
+### Training with your own data
+If you want to train the model with your own data, pass an argument to `run.py`:
 ```sh
-python3 run.py data.csv
+python3 run.py /path/to/data.csv
 ```
 `data.csv` is a CSV file with headers `name` and `gender`. A 1 corresponds to female, and a
 0 corresponds to male. These must be ***first names*** only, and contain at least one name-gender entry.
+
+<!-- USAGE EXAMPLES -->
+## Using the pre-trained model
+
+The model is provided through the `model` directory. <br>
+Load it into memory using Keras:
+```py
+import tensorflow.keras as keras
+model = keras.models.load_model('model')
+```
 
 
 <!-- LICENSE -->
