@@ -32,14 +32,14 @@ class GenderClassifier:
         model = keras.Sequential(
             [
                 keras.layers.Bidirectional(
-                    keras.layers.LSTM(units=256, return_sequences=True),
+                    keras.layers.LSTM(units=64, return_sequences=True),
                     backward_layer=keras.layers.LSTM(
-                        units=512, return_sequences=True, go_backwards=True
+                        units=64, return_sequences=True, go_backwards=True
                     ),
                     input_shape=(self.vector_size, len(self.vocab) + 1),
                 ),
                 keras.layers.Dropout(0.5),
-                keras.layers.Bidirectional(keras.layers.LSTM(units=256)),
+                keras.layers.Bidirectional(keras.layers.LSTM(units=64)),
                 keras.layers.Dropout(0.5),
                 keras.layers.Dense(units=1, activation=keras.activations.sigmoid),
             ]

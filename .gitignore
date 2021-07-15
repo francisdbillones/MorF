@@ -3,6 +3,8 @@
 # jetbrains
 .idea/
 
+notebooks/
+
 # tensorboard
 logs/
 checkpoints/
