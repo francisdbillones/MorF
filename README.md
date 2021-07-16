@@ -25,10 +25,8 @@ To get a local copy up and running follow these simple steps.
    ```
 
 ### Training with your own data
-If you want to train the model with your own data, pass an argument to `run.py`:
-```sh
-python3 run.py /path/to/data.csv
-```
+If you want to train the model with your own data, overwrite `data.csv`.
+
 `data.csv` is a CSV file with headers `name` and `gender`. A 1 corresponds to female, and a
 0 corresponds to male. These must be ***first names*** only, and contain at least one name-gender entry.
 
